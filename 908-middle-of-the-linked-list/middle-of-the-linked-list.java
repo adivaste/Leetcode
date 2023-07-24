@@ -10,20 +10,28 @@
  */
 class Solution {
     public ListNode middleNode(ListNode head) {
+        // Approach 1 : Traverse and find the length of the linked list 
+        // then make half of the length and that many traversal need to 
+        // make to reach the second middle
 
-        if (head == null) return head;
-        if (head.next == null) return head;
+        // If length = 6 ==> 6/2 = 3 
+        // If length = 5 ==> 5/2 = 2
 
-        // Use fast and slow pointers
-        ListNode slow = head;
-        ListNode fast = head;
-
-        while(fast != null && fast.next != null){
-            fast = fast.next.next;
-            slow = slow.next;
+        int length = 0;
+        ListNode temp = head;
+        while(temp != null){
+            temp = temp.next;
+            length++;
+        }
+        
+        int noOfTraversals = length/2;
+        temp = head;
+        while(noOfTraversals != 0){
+            temp = temp.next;
+            noOfTraversals--;
         }
 
-        // return answer
-        return slow;
+        return temp;
+
     }
 }
