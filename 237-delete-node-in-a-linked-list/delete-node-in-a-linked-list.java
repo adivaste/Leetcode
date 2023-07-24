@@ -13,6 +13,7 @@ class Solution {
         int nextData = node.next.val;
         node.next.val = node.val;
         node.val = nextData;
+        
 
         // Delete the next node.
         node.next = node.next.next;
