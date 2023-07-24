@@ -17,6 +17,8 @@ class Solution {
         ListNode temp = head;
 
         while(temp != null){
+            // Check next value is same as curr, before that check next is present
+            // or not. If not same then go next
             if((temp.next != null) && (temp.val == temp.next.val)){
                 temp.next = temp.next.next;
             }
