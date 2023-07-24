@@ -17,6 +17,8 @@ class Solution {
         // If length = 6 ==> 6/2 = 3 
         // If length = 5 ==> 5/2 = 2
 
+
+        // Find the length
         int length = 0;
         ListNode temp = head;
         while(temp != null){
@@ -24,6 +26,7 @@ class Solution {
             length++;
         }
         
+        // Iterate that len/2 many times
         int noOfTraversals = length/2;
         temp = head;
         while(noOfTraversals != 0){
