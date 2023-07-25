@@ -11,16 +11,21 @@
  */
 public class Solution {
     public boolean hasCycle(ListNode head) {
-        
-        // Storing the node each time we visit
-        Set<ListNode> hashset = new HashSet<ListNode>();
- 
-        ListNode temp = head;
-        while(temp != null){
-            if (hashset.contains(temp)) return true;
-            hashset.add(temp);
-            temp = temp.next;
+
+        if (head == null || head.next == null)  return false;
+
+        // Approach 2 : Fast and slow pointers
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) return true;
         }
+
         return false;
+
     }
 }
