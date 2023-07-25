@@ -9,56 +9,31 @@
  * }
  */
 class Solution {
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 
-        if (list1 == null) return list2;
-        if (list2 == null) return list1;
-        
-        // Answer : merge of two
-        ListNode merged = new ListNode(-1);
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
 
-        // Pointer for two ll for traversing
-        ListNode temp1 = list1;
-        ListNode temp2 = list2;
-
-        ListNode temp = merged;
-
-        while(temp1 != null && temp2 != null){
-
-            if (temp1.val < temp2.val){
-                ListNode newNode = new ListNode(temp1.val);
-                temp.next = newNode;
-                temp = newNode;
-                temp1 = temp1.next;
-            }
-            else{
-                ListNode newNode = new ListNode(temp2.val);
-                temp.next = newNode;
-                temp = newNode;
-                temp2 = temp2.next;
-            }
+        if (l1.val > l2.val){
+            ListNode temp = l1;
+            l1 = l2;
+            l2 = temp;
         }
 
-        if (temp1 == null){
-            while(temp2 != null){
-                ListNode newNode = new ListNode(temp2.val);
-                temp.next = newNode;
-                temp = newNode;
-                temp2 = temp2.next;
+        ListNode answer = l1;
+        while(l1 != null && l2 != null){
+            ListNode prev = null;
+            while(l1 != null && l1.val <= l2.val){
+                prev = l1;
+                l1 = l1.next;
             }
+            prev.next = l2;
+
+            // Swap
+            ListNode temp = l1;
+            l1 = l2;
+            l2 = temp;
         }
-
-        if (temp2 == null){
-            while(temp1 != null){
-                ListNode newNode = new ListNode(temp1.val);
-                temp.next = newNode;
-                temp = newNode;
-                temp1 = temp1.next;
-            }
-        }
-
-        return merged.next;
-
-
+        return answer;
     }
 }
