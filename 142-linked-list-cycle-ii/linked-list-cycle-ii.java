@@ -12,14 +12,24 @@
 public class Solution {
     public ListNode detectCycle(ListNode head) {
         
-        // Use hashset
-        HashSet<ListNode> hashset = new HashSet<>();
+        if (head == null || head.next == null)  return null;
 
-        ListNode temp = head;
-        while(temp != null && temp.next != null){
-            if (hashset.contains(temp)) return temp;
-            hashset.add(temp);
-            temp = temp.next;
+        // Approach 2 : Fast and slow pointers
+
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode entry = head;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast){
+                while( slow != entry){
+                    slow = slow.next;
+                    entry = entry.next;
+                }
+                return entry;
+            }
         }
 
         return null;
