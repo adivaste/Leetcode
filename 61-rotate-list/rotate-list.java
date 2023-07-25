@@ -10,38 +10,36 @@
  */
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-        
-        // Approach 1 : As we are rotating the linked list, anti clock wise
-        // direction, so back elements will come back to the front, that means 
-        // we have to connect the last node to front, and break the link from 
-        // somewhere
-
-        if (head == null || k==0) return head;
-
-        // Point last to head
-        ListNode temp = head;
-        int size = 0;
-        while(temp.next != null){
-            temp = temp.next;
-            size++;
-        }
-        size++;
-        temp.next = head;
-
-        k = k%size;
-
-        // Break the chain
-        int  traversalsToMake = size - k - 1;
-        temp = head;
-        while(traversalsToMake != 0){
-            temp = temp.next;
-            traversalsToMake--;
+        if (head == null || head.next == null || k == 0) {
+            return head; // No rotation needed
         }
 
-        // Modify next and head
-        head = temp.next;
-        temp.next = null;
+        // Calculate the length of the linked list
+        int length = 1;
+        ListNode tail = head;
+        while (tail.next != null) {
+            tail = tail.next;
+            length++;
+        }
+
+        // Perform k right rotations
+        for (int i = 0; i < k % length; i++) {
+            ListNode current = head;
+            ListNode prev = null;
+
+            // Move to the second-to-last node
+            while (current.next != null) {
+                prev = current;
+                current = current.next;
+            }
+
+            // Move the last node to the front
+            current.next = head;
+            head = current;
+            prev.next = null;
+        }
 
         return head;
     }
+
 }
