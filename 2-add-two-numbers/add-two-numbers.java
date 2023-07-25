@@ -10,34 +10,79 @@
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode dummyHead = new ListNode(0);
-        ListNode current = dummyHead;
+
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        
+        // Get length of each list
+        int len1 = getLength(l1);
+        int len2 = getLength(l2);
+
+        // Select for the answer
+        ListNode temp = l1;
+        ListNode answer = l2;
+
+        if (len1 > len2){
+            answer = l1;
+            temp = l2;
+        }
+
+        ListNode dummy = new ListNode(-1);
+        dummy.next = answer;
+
+
+        // Traverse the "temp" to add in "answer"
+        int sum = 0;
         int carry = 0;
 
-        while (l1 != null || l2 != null) {
-            int sum = carry;
+        ListNode prev = answer;
+        while(temp != null){
+            sum = answer.val + temp.val + carry;
 
-            if (l1 != null) {
-                sum += l1.val;
-                l1 = l1.next;
+            if(sum > 9){
+                carry = sum/10;
+                sum = sum%10;
             }
+            else carry = 0;
 
-            if (l2 != null) {
-                sum += l2.val;
-                l2 = l2.next;
-            }
+            answer.val = sum;
 
-            carry = sum / 10;
-            sum %= 10;
-            current.next = new ListNode(sum);
-            current = current.next;
+            temp = temp.next;
+            prev = answer;
+            answer = answer.next;
         }
 
-        if (carry > 0) {
-            current.next = new ListNode(carry);
+        while(answer != null){
+            sum = answer.val + carry;
+
+            if(sum > 9){
+                carry = sum/10;
+                sum = sum%10;
+            }
+            else carry = 0;
+
+            answer.val = sum;
+            prev = answer;
+            answer = answer.next;
         }
 
-        return dummyHead.next;
+        if (carry == 1){
+            prev.next = new ListNode(1);
+        }
+
+        return dummy.next;
+
+        
+    }
+
+    public int getLength(ListNode list){
+        int len = 0;
+        if (list == null) return 0;
+        while(list != null){
+            len++;
+            list = list.next;
+        }
+        return len;
     }
 
 }
