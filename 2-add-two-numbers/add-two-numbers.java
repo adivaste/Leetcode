@@ -10,66 +10,34 @@
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-
-        ListNode answer = new ListNode(-1);
-
-        ListNode temp1 = l1;
-        ListNode temp2 = l2;
-
-        int sum = 0;
+        ListNode dummyHead = new ListNode(0);
+        ListNode current = dummyHead;
         int carry = 0;
 
-        ListNode temp = answer;
-        while(temp1 != null && temp2 != null){
-            sum = temp1.val + temp2.val + carry;
-            if (sum > 9){
-                carry = sum/10;
-                sum = sum%10;
-            }
-            else{
-                carry = 0;
-            }
-                        
-            ListNode newNode = new ListNode(sum);
-            temp.next = newNode;
-            temp = newNode;
+        while (l1 != null || l2 != null) {
+            int sum = carry;
 
-            temp1 = temp1.next;
-            temp2 = temp2.next;
+            if (l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
+            }
+
+            if (l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+
+            carry = sum / 10;
+            sum %= 10;
+            current.next = new ListNode(sum);
+            current = current.next;
         }
 
-        while (temp1 == null && temp2 != null){
-            sum = temp2.val + carry;
-            if (sum > 9){
-                carry = sum/10;
-                sum = sum%10;
-            }
-            else carry = 0;
-            
-            ListNode newNode = new ListNode(sum);
-            temp.next = newNode;
-            temp = newNode;
-            temp2 = temp2.next;
+        if (carry > 0) {
+            current.next = new ListNode(carry);
         }
 
-        while (temp2 == null  && temp1 != null){
-            sum = temp1.val + carry;
-            if (sum > 9){
-                carry = sum/10;
-                sum = sum%10;
-            }
-            else carry = 0;
-            
-            ListNode newNode = new ListNode(sum);
-            temp.next = newNode;
-            temp = newNode;
-            temp1 = temp1.next;
-        }
-
-        if (temp1 == null && temp2 == null && carry == 1) temp.next = new ListNode(1);
-
-        return answer.next;
-
-        
+        return dummyHead.next;
     }
+
 }
