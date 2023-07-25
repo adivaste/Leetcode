@@ -10,24 +10,51 @@
  */
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null) return true;
-
-        ArrayList<Integer> answer = new ArrayList<>();
-
-        ListNode temp = head;
-        while(temp != null){
-            answer.add(temp.val);
-            temp = temp.next;
+        if (head == null || head.next == null) {
+            return true; // An empty list or single element list is considered a palindrome
         }
 
-        // boolean isPalindrome = true;
-        int len = answer.size();
-        for(int i=0; i<len/2; i++){
-            if (answer.get(i) != answer.get(len-i-1)) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Find the middle of the linked list using fast and slow pointers
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse the second half of the linked list
+        ListNode reversedSecondHalf = reverse(slow);
+
+        // Compare the first half with the reversed second half
+        ListNode firstHalf = head;
+        ListNode secondHalf = reversedSecondHalf;
+
+        while (secondHalf != null) {
+            if (firstHalf.val != secondHalf.val) {
                 return false;
             }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
         }
+
         return true;
 
+
     }
+
+    private ListNode reverse(ListNode head) {
+        ListNode prev = null;
+        ListNode current = head;
+
+        while (current != null) {
+            ListNode nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+
+        return prev;
+    }
+
 }
