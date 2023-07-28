@@ -1,40 +1,21 @@
-import java.util.ArrayList;
 import java.util.Stack;
 
 class StockSpanner {
-
-    private class Pair {
-        int number;
-        int index;
-
-        public Pair(int f, int s) {
-            this.number = f;
-            this.index = s;
-        }
-    }
-
-    private int[] finalAnswer;
+    private Stack<int[]> stack;
 
     public StockSpanner() {
-        this.finalAnswer = new int[0];
+        stack = new Stack<>();
     }
 
     public int next(int price) {
         int span = 1;
-        for (int i = finalAnswer.length - 1; i >= 0; i--) {
-            if (finalAnswer[i] <= price) {
-                span += 1;
-            } else {
-                break;
-            }
+
+        // Pop elements while the current price is greater than or equal to the top price in the stack
+        while (!stack.isEmpty() && price >= stack.peek()[0]) {
+            span += stack.pop()[1];
         }
 
-        // Update the finalAnswer array
-        int[] updatedFinalAnswer = new int[finalAnswer.length + 1];
-        System.arraycopy(finalAnswer, 0, updatedFinalAnswer, 0, finalAnswer.length);
-        updatedFinalAnswer[finalAnswer.length] = price;
-        finalAnswer = updatedFinalAnswer;
-
+        stack.push(new int[]{price, span});
         return span;
     }
 }
