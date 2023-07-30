@@ -14,21 +14,13 @@ class Solution {
             }
         }
 
-        int max = 0;
-        int answer = -1;
-        for (int value : map.values()) {
-            if (value > max) {
-                max = value;
-            }
-        }
-
+        int halfSize = size / 2;
         for (int key : map.keySet()) {
-            if (map.get(key) == max) {
-                answer = key;
-                break; // No need to continue once we find the majority element
+            if (map.get(key) > halfSize) {
+                return key;
             }
         }
 
-        return answer;
+        return -1;
     }
 }
