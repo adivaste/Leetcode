@@ -1,26 +1,26 @@
 
 class Solution {
     public int majorityElement(int[] nums) {
+        int count = 0;
+        int element = nums[0];
 
-        // A2 - HashMap
-        HashMap<Integer, Integer> map = new HashMap<>();
-
-        int size = nums.length;
-        for (int i = 0; i < size; i++) {
-            if (map.containsKey(nums[i])) {
-                map.put(nums[i], map.get(nums[i]) + 1);
-            } else {
-                map.put(nums[i], 1);
+        for(int i=0; i<nums.length; i++){
+            if (count == 0){
+                count = 1;
+                element = nums[i];
+            }
+            else if (nums[i] == element){
+                count++;
+            }
+            else{
+                count--;
             }
         }
 
-        int halfSize = size / 2;
-        for (int key : map.keySet()) {
-            if (map.get(key) > halfSize) {
-                return key;
-            }
+        int counter = 0;
+        for(int num : nums){
+            if (num == element) counter++;
         }
-
-        return -1;
+        return counter > nums.length/2 ? element : -1;
     }
 }
