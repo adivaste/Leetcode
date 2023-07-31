@@ -1,23 +1,29 @@
 class OrderedStream {
-    private String[] data;
-    private int ptr;
+
+    private String[] map;
+    private int pointer;
 
     public OrderedStream(int n) {
-        data = new String[n + 1];
-        ptr = 1;
+        this.map = new String[n+1];
+        this.pointer = 1;
     }
+    
+    public List<String> insert(int idKey, String value) {
+        map[idKey] = value;
 
-    public String[] insert(int idKey, String value) {
-        data[idKey] = value;
-        List<String> res = new ArrayList<>();
-        for (int i = ptr; i < data.length; i++) {
-            if (data[i] != null) {
-                res.add(data[i]);
-            } else {
-                ptr = i;
-                break;
-            }
+        List<String> answer = new ArrayList<String>();
+
+        while(this.pointer < this.map.length && map[this.pointer] != null){
+            String mapVal = map[this.pointer];
+            answer.add(mapVal);
+            this.pointer++;
         }
-        return res.toArray(new String[0]);
+        return answer;
     }
 }
+
+/**
+ * Your OrderedStream object will be instantiated and called as such:
+ * OrderedStream obj = new OrderedStream(n);
+ * List<String> param_1 = obj.insert(idKey,value);
+ */
