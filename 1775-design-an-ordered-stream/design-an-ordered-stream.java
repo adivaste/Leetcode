@@ -1,20 +1,23 @@
 class OrderedStream {
 
-    private String[] map;
+    private HashMap<Integer, String> map;
     private int pointer;
+    private int max;
 
     public OrderedStream(int n) {
-        this.map = new String[n+1];
+        this.map = new HashMap<>();
         this.pointer = 1;
+        this.max = 0;
     }
     
     public List<String> insert(int idKey, String value) {
-        map[idKey] = value;
+        map.put(idKey, value);
+        this.max = Math.max(this.max, idKey);
 
         List<String> answer = new ArrayList<String>();
 
-        while(this.pointer < this.map.length && map[this.pointer] != null){
-            String mapVal = map[this.pointer];
+        while(this.pointer <= this.max && map.get(this.pointer) != null){
+            String mapVal = map.get(this.pointer);
             answer.add(mapVal);
             this.pointer++;
         }
