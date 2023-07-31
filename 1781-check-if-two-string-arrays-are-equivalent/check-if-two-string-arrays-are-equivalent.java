@@ -1,16 +1,16 @@
 class Solution {
     public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
         
-        String concatenatedString1 = "";
+        StringBuilder string1 = new StringBuilder();
         for(String s : word1){
-            concatenatedString1 += s;
+            string1.append(s);
         }
 
-        String concatenatedString2 = "";
+        StringBuilder string2 = new StringBuilder();
         for(String s : word2){
-            concatenatedString2 += s;
+            string2.append(s);
         }
 
-        return concatenatedString2.equals(concatenatedString1);
+        return string1.toString().equals(string2.toString());
     }
 }
