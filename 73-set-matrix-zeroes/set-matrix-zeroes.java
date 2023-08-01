@@ -3,34 +3,33 @@ class Solution {
         int rows = matrix.length;
         int columns = matrix[0].length;
 
-        // Create a new array to store the result
-        int[][] answer = new int[rows][columns];
+        // Use -99 as the marker for rows and columns to be zeroed
+        int marker = -99;
 
-        // Copy the original matrix to the answer array
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                answer[i][j] = matrix[i][j];
-            }
-        }
-
-        // Iterate through the matrix to find zeros and update the answer array
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (matrix[i][j] == 0) {
+                    // Mark rows and columns to be zeroed using the marker
                     for (int x = 0; x < rows; x++) {
-                        answer[x][j] = 0;
+                        if (matrix[x][j] != 0) {
+                            matrix[x][j] = marker;
+                        }
                     }
                     for (int y = 0; y < columns; y++) {
-                        answer[i][y] = 0;
+                        if (matrix[i][y] != 0) {
+                            matrix[i][y] = marker;
+                        }
                     }
                 }
             }
         }
 
-        // Copy the result back to the original matrix
+        // Convert the marked elements to zeros
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                matrix[i][j] = answer[i][j];
+                if (matrix[i][j] == marker) {
+                    matrix[i][j] = 0;
+                }
             }
         }
     }
