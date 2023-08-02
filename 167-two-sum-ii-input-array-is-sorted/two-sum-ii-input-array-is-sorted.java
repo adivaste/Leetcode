@@ -6,17 +6,10 @@ class Solution {
         while(left < right){
             int result = numbers[left] + numbers[right];
 
-            if (result == target){
-                return new int[]{left+1, right+1};
-            }
-            else if (result < target){
-                left++;
-            }
-            else{
-                right--;
-            }
+            if (result == target) return new int[]{left+1, right+1};
+            else if (result < target) left++;
+            else right--;
         }
-
         return new int[]{-1, -1};
     }
 }
