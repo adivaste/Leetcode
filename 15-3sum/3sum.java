@@ -39,7 +39,7 @@ class Solution {
         Arrays.sort(nums);
 
         // Step 2 : 
-        for(int i=0; i<size; i++){
+        for(int i=0; i<size-2; i++){
             if (i > 0 && nums[i] == nums[i-1]){
                 continue;
             }
