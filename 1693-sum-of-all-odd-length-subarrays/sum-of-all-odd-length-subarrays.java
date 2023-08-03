@@ -4,11 +4,11 @@ class Solution {
 
         int sum = 0;
         for(int i=0; i<size; i++){
+            int currSum = 0;
             for(int j=i; j<size; j++){
+                currSum += arr[j];
                 if ((j-i)%2 == 0){
-                    for(int k=i; k<=j; k++){
-                        sum += arr[k];
-                    }
+                    sum += currSum;
                 }
             }
         }
