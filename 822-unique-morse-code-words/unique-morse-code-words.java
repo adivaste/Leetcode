@@ -1,26 +1,18 @@
 class Solution {
     public int uniqueMorseRepresentations(String[] words) {
-        String [] morse=new String[] {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
-        HashMap<Character,String> map=new HashMap<>();
-        for(char i='a';i<='z';i++)
-        {
-            map.put(i,morse[i-'a']);
+        String[] MORSE = new String[]{".-","-...","-.-.","-..",".","..-.","--.",
+                         "....","..",".---","-.-",".-..","--","-.",
+                         "---",".--.","--.-",".-.","...","-","..-",
+                         "...-",".--","-..-","-.--","--.."};
+
+        Set<String> seen = new HashSet();
+        for (String word: words) {
+            StringBuilder code = new StringBuilder();
+            for (char c: word.toCharArray())
+                code.append(MORSE[c - 'a']);
+            seen.add(code.toString());
         }
 
-        HashSet<String> set=new HashSet<>();
-        for(int i=0;i<words.length;i++)
-        {
-            StringBuilder sb=new StringBuilder();
-            String word=words[i];
-            for(int j=0;j<word.length();j++)
-            {
-                char c=word.charAt(j);
-                sb.append(map.get(c));
-            }
-
-            set.add(sb.toString());
-        }
-
-        return set.size();
+        return seen.size();
     }
 }
