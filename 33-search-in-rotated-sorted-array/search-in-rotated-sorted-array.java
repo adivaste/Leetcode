@@ -1,13 +1,13 @@
 class Solution {
     public int numberOfTimesArraySorted(int[] arr){
-        if (arr.length == 1) return 0;
-
         // For array find index of minimum element that answer
         int size = arr.length;
         int left = 0;
         int right = size - 1;
 
         int minIndex = -1;
+
+        if (size == 1) return 0;
 
         while(left <= right){
             int mid = left + (right-left)/2;
