@@ -2,16 +2,17 @@ class Solution {
 
     public void makeIsland(char[][] grid, int row, int column, int rowSize, int columnSize){
 
-        if (grid[row][column] == '1'){
+        if (row < rowSize && row >= 0 && column < columnSize && column >= 0 && grid[row][column] == '1'){
             grid[row][column] = '#';
-
-            if (row < rowSize-1) makeIsland(grid, row+1, column, rowSize, columnSize);
-            if (row > 0) makeIsland(grid, row-1, column, rowSize, columnSize);
-
-            if (column < columnSize-1) makeIsland(grid, row, column+1, rowSize, columnSize);
-            if (column > 0) makeIsland(grid, row, column-1, rowSize, columnSize);
+            
+            makeIsland(grid, row+1, column, rowSize, columnSize);
+            makeIsland(grid, row-1, column, rowSize, columnSize);
+            makeIsland(grid, row, column+1, rowSize, columnSize);
+            makeIsland(grid, row, column-1, rowSize, columnSize);
         }
-        return;
+        else{
+            return;
+        }
     }
 
     public int numIslands(char[][] grid) {
