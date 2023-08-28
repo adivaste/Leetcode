@@ -1,28 +1,20 @@
 class Solution {
     public boolean canBeEqual(int[] target, int[] arr) {
-        Arrays.sort(arr);
-        Arrays.sort(target);
-        for(int i=0; i<arr.length; i++){
-            if (arr[i] != target[i]) return false;
+        int targetSize = target.length;
+        int arrSize = arr.length;
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for(int i=0; i<targetSize; i++){
+            map.put(target[i], map.getOrDefault(target[i], 0) + 1);
+            map.put(arr[i], map.getOrDefault(arr[i], 0) - 1);
         }
+
+        for(int key : map.keySet()){
+            if (map.get(key) != 0) return false;
+        }
+
         return true;
     }
 }
-
-/*
-# Solution :
-
-- Traverse entire array
-- For each element in array
-    - Check is at ccorect pos.
-    - Not : Find that element and reverse from that location
-
-[1,2,3,4]  [2,4,1,3]
-           [1,4,2,3]
-           [1,2,4,3]           
-
-reverse(currIdx, elementIdx) 
-
-
-*/
 
