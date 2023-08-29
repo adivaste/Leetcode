@@ -1,38 +1,40 @@
 class MinStack {
-
-    private Stack<Integer> s;
-    private Stack<Integer> ss;
-
-    public MinStack() {
-        s = new Stack<>();    
-        ss = new Stack<>();
-    }
     
-    public void push(int val) {
-        s.push(val);
-        if (ss.size() == 0 || val <= ss.peek()){
-            ss.push(val);
+    // STACK implemented using LL
+    private class Node{
+        int val;
+        int min;
+        Node next;
+
+        public Node(int val, int min, Node next){
+            this.val = val;
+            this.min = min;
+            this.next = next;
         }
     }
-    
-    public void pop() {
-        if (s.size() > 0){
-            int top = s.pop();
 
-            if (top == ss.peek()){
-                ss.pop();
-            }
+    // Head
+    private Node head;
+
+    public void push(int val){
+        if (head == null){
+            head = new Node(val, val, null);
+        }
+        else{
+            head = new Node(val, Math.min(val, head.min), head);
         }
     }
-    
-    public int top() {  
-        if (s.size() > 0) return s.peek();
-        return -1;
+
+    public void pop(){
+        head = head.next;
     }
-    
-    public int getMin() {
-        if (ss.size() > 0) return ss.peek();
-        return -1;
+
+    public int top(){
+        return head.val;
+    }
+
+    public int getMin(){
+        return head.min;
     }
 }
 
