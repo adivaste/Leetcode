@@ -11,10 +11,8 @@
  */
 public class Solution {
     public boolean hasCycle(ListNode head) {
-
-        if (head == null || head.next == null)  return false;
-
-        // Approach 2 : Fast and slow pointers
+        
+        if (head == null || head.next == null ) return false;
 
         ListNode slow = head;
         ListNode fast = head;
@@ -22,10 +20,11 @@ public class Solution {
         while(fast != null && fast.next != null){
             slow = slow.next;
             fast = fast.next.next;
+            
             if (slow == fast) return true;
+
         }
-
         return false;
-
+        
     }
 }
