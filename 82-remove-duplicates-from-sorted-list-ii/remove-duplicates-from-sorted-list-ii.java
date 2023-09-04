@@ -10,32 +10,44 @@
  */
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
+            // Check if the list is empty
+    if (head == null) {
+        return head;
+    }
+
+    // Temp pointer to traverse
+    ListNode prev = null;
+    ListNode temp = head;
+
+    // Traverse the list
+    while (temp != null) {
+        // Flag
+        boolean areRemoved = false;
+
+        // Remove all other duplicates
+        while (temp.next != null && temp.val == temp.next.val) {
+            areRemoved = true;
+            temp = temp.next;
         }
 
-        ListNode dummy = new ListNode(-1);
-        dummy.next = head;
-        ListNode prev = dummy;
-        ListNode current = head;
-
-        while (current != null) {
-            // Skip all nodes with duplicate values
-            while (current.next != null && current.val == current.next.val) {
-                current = current.next;
-            }
-
-            // If duplicates are found, skip the entire group
-            if (prev.next != current) {
-                prev.next = current.next;
+        // Delete the current node
+        if (areRemoved) {
+            if (prev != null) {
+                prev.next = temp.next;
             } else {
-                prev = current; // Move the previous pointer
+                // If prev is null, it means we're removing duplicates from the head of the list
+                head = temp.next;
             }
-
-            current = current.next; // Move the current pointer
+        } else {
+            // Only update prev if no duplicates were removed
+            prev = temp;
         }
 
-        return dummy.next;
-}
+        // Move to next node
+        temp = temp.next;
+    }
 
+
+    return head;
+    }
 }
