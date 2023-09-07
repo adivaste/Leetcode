@@ -1,30 +1,46 @@
-public class Solution {
+public class Solution{
+			
+		public ListNode reverse(ListNode startingNode, ListNode endingNode){
+				ListNode dummyNull = endingNode.next;
+				
+				ListNode prev = null;
+				ListNode curr = startingNode;
+				ListNode next;
+				
+				while(curr != dummyNull){
+						next = curr.next;
+						curr.next = prev;
 
-    public ListNode reverseBetween(ListNode head, int left, int right) {
-        if (head == null || head.next == null || left == right) {
-            return head;
-        }
+						prev = curr;
+						curr = next;
+				}
 
-        ListNode dummy = new ListNode(-1);
-        dummy.next = head;
-        ListNode prev = dummy;
+				startingNode.next = dummyNull;
+				return endingNode;			
+		}
+		public ListNode reverseBetween(ListNode head, int left, int right){
+				// Check for linked list
+				if (head == null || head.next == null) return head;
+				
+				// Check for left and right
+				if (left >= right) return head;
 
-        // Move 'prev' to the node just before the 'left' position
-        for (int i = 1; i < left; i++) {
-            prev = prev.next;
-        }
+				ListNode startingNode = null;
+				ListNode endingNode = null;
+				ListNode prev = null;
+				
+				ListNode temp = head;
+				int count = 0;
+				while(temp != null){
+						count++;
+						if (count == left - 1) prev = temp;
+						if (count == left ) startingNode = temp;
+						if (count == right ) endingNode = temp;
+						temp = temp.next;
+				}
 
-        ListNode curr = prev.next;
-        ListNode next;
-
-        // Reverse the sublist between 'left' and 'right'
-        for (int i = left; i < right; i++) {
-            next = curr.next;
-            curr.next = next.next;
-            next.next = prev.next;
-            prev.next = next;
-        }
-
-        return dummy.next;
-    }
+				if (prev != null) prev.next = reverse(startingNode, endingNode);
+				else head = reverse(startingNode, endingNode);
+				return head;
+		}
 }
