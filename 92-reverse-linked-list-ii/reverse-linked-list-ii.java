@@ -1,53 +1,30 @@
-class Solution {
-
-    public ListNode reverseList(ListNode startPoint, ListNode endPoint) {
-
-        ListNode prev = null;
-        ListNode curr = startPoint;
-        ListNode next = startPoint;
-
-        while (curr != endPoint) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-
-        startPoint.next = endPoint.next;
-        endPoint.next = prev; // Update endPoint's next to the new first node
-        return endPoint;
-    }
+public class Solution {
 
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        
-        // Check for linked list
-        if (head == null || head.next == null) return head;
-
-        // Calculate the length
-        int length = 0;
-        ListNode prev = null;
-        ListNode startPoint = null;
-        ListNode endPoint = null;
-
-        ListNode temp = head;
-        while (temp != null) {
-            length++;
-            if (length == left - 1) prev = temp;
-            if (length == left) startPoint = temp;
-            if (length == right) endPoint = temp;
-            temp = temp.next;
+        if (head == null || head.next == null || left == right) {
+            return head;
         }
 
-        // Checks for Left and right
-        if (left <= 0 || left > length || right <= 0 || right > length) return head;
-        if (left >= right) return head;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode prev = dummy;
 
-        // Reverse in range
-        if (prev != null) prev.next = reverseList(startPoint, endPoint);
-        else {
-            head = reverseList(startPoint, endPoint);
+        // Move 'prev' to the node just before the 'left' position
+        for (int i = 1; i < left; i++) {
+            prev = prev.next;
         }
 
-        return head;
+        ListNode curr = prev.next;
+        ListNode next;
+
+        // Reverse the sublist between 'left' and 'right'
+        for (int i = left; i < right; i++) {
+            next = curr.next;
+            curr.next = next.next;
+            next.next = prev.next;
+            prev.next = next;
+        }
+
+        return dummy.next;
     }
 }
