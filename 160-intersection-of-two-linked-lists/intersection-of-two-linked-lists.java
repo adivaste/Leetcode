@@ -14,18 +14,21 @@ public class Solution {
         
         if (headA == null || headB == null) return null;
 
+        HashSet<ListNode> set = new HashSet<>();
+
         ListNode temp1 = headA;
         ListNode temp2 = headB;
 
         while(temp1 != null){
-            temp2 = headB;
-            while(temp2 != null){
-                if (temp2 == temp1) return temp2;
-                temp2= temp2.next;
-            }
+            set.add(temp1);
             temp1 = temp1.next;
         }
 
+        while(temp2 != null){
+            if (set.contains(temp2)) return temp2;
+            temp2 = temp2.next;
+        }
         return null;
+        
     }
 }
