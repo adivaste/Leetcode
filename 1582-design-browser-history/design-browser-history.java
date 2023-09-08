@@ -1,30 +1,38 @@
 class BrowserHistory {
 
-    LinkedList<String> history;
-    int currIndex;
+    Stack<String> backward;
+    Stack<String> forward;
 
     public BrowserHistory(String homepage) {
-        history = new LinkedList<>();
-        history.add(homepage);
-        currIndex = 0;
+        backward = new Stack<>();
+        forward = new Stack<>();
+
+        backward.push(homepage);
     }
     
     public void visit(String url) {
-        while(history.size() > currIndex + 1){
-            history.removeLast();
-        }
-        history.add(url);
-        currIndex++;
+        // Clear forward
+        while(!forward.isEmpty()) forward.pop();
+        backward.push(url);
     }
     
     public String back(int steps) {
-        this.currIndex = Math.max(0, currIndex - steps);
-        return history.get(currIndex);
+        // Pop from backword into forward
+        while(backward.size() != 1 && steps != 0){
+            forward.push(backward.pop());
+            steps--;
+        }
+
+        return backward.peek();
     }
     
     public String forward(int steps) {
-        currIndex = Math.min(history.size() - 1, currIndex + steps);
-        return history.get(currIndex);
+        // Pop form forward into backword
+        while(!forward.isEmpty() && steps != 0){
+            backward.push(forward.pop());
+            steps--;
+        }
+        return backward.peek();
     }
 }
 
