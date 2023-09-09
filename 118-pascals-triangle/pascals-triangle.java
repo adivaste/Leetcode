@@ -1,26 +1,24 @@
 class Solution {
     public List<List<Integer>> generate(int numRows) {
-
-        // Answer
+        
         List<List<Integer>> answer = new ArrayList<List<Integer>>();
-        List<Integer> first = new ArrayList<Integer>();
-        first.add(1);
-        answer.add(first);
 
-        /// Base case
-        if (numRows == 1) return answer;
-
-        // For other numbers
-        for(int j=2; j<=numRows; j++){
-            List<Integer> curr = new ArrayList<Integer>();
-            curr.add(1);
-            for(int i=1; i<j-1; i++){
-                List<Integer> prev = answer.get(answer.size()-1);
-                curr.add(prev.get(i-1) + prev.get(i));
+        for(int i=0; i<numRows; i++){
+            ArrayList<Integer> curr = new ArrayList<Integer>();
+            for (int count = 0; count <= i; count++) {
+                curr.add(1);
             }
-            curr.add(1);
+
+            
+            for(int j=1; j<i; j++){
+                int val = answer.get(i-1).get(j) + answer.get(i-1).get(j-1);
+                curr.set(j, val);
+            }
+
             answer.add(curr);
         }
+
         return answer;
+
     }
 }
