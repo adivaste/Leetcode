@@ -1,4 +1,5 @@
 class Solution {
+    
     public int peakIndexInMountainArray(int[] arr) {
         int start = 0;
         int end = arr.length-1;
@@ -12,4 +13,5 @@ class Solution {
         }
         return -1;
     }
+    
 }
