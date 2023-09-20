@@ -1,27 +1,32 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> answer = new ArrayList<>();
-        boolean[] check = new boolean[nums.length];
-
-        findPermute(nums, answer, new ArrayList<Integer>(), check);
+        findPermute(nums, answer, 0);
         return answer;
     }
 
-    public void findPermute(int[] nums, List<List<Integer>> answer, ArrayList<Integer> output,  boolean[] check){
+    public void swap(int i, int j, int[] arr){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    public void findPermute(int[] nums, List<List<Integer>> answer, int index){
+
         // Base case
-        if (output.size() == nums.length){
-            answer.add(new ArrayList<Integer>(output));
+        if (index == nums.length){
+            List<Integer> output = new ArrayList<Integer>();
+            for(int i=0; i<nums.length; i++){
+                output.add(nums[i]);
+            }
+            answer.add(output);
             return;
         }
 
-        for(int i=0; i<check.length; i++){
-            if (!check[i]){
-                check[i] = true;
-                output.add(nums[i]);
-                findPermute(nums, answer, output, check);
-                check[i] = false;
-                output.remove(output.size()-1);
-            }
+        for(int i=index; i<nums.length; i++){
+            swap(index, i, nums);
+            findPermute(nums, answer, index+1);
+            swap(index, i, nums);
         }
     }
 
