@@ -1,33 +1,13 @@
 class Solution {
     public boolean isSubsequence(String s, String t) {
-        if (s.length() > t.length()) return false;
-        if (s.length() == 0) return true;
+         int s_idx = 0;
+         int t_idx = 0;
 
-        int i=0;
-        for(int j=0; j<t.length(); j++){
-            if (i == s.length()) return true;
-            if (t.charAt(j) == s.charAt(i)){
-                i++;
-            }
-        }
+         while(s_idx < s.length() && t_idx < t.length()){
+             if (s.charAt(s_idx) == t.charAt(t_idx)) s_idx++;
+             t_idx++;
+         }
 
-        return i == s.length();
+         return s_idx == s.length();
     }
 }
-
-/*
-s = "abc"
-t = "ahbgdc"
-
-i = 0
-traverse over string "t"
-    check each character matches with s[i]
-        move both pointer
-    otherwise
-        move only j
-
-if i == s.length return true
-false
-
-
-*/
