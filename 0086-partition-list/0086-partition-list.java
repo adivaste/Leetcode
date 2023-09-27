@@ -15,27 +15,30 @@ class Solution {
         if (head == null || head.next == null) return head;
 
         // Maintain two queue for smaller and larger elements
-        Queue<Integer> smaller = new LinkedList<Integer>();
-        Queue<Integer> greater = new LinkedList<Integer>();
+        ListNode before = new ListNode(-1);
+        ListNode after = new ListNode(-1);
 
         // Temp pointer
+        ListNode beforeCurr = before;
+        ListNode afterCurr = after;
+
+        // Traverse the entire linked list
         ListNode temp = head;
-
-        // Traverse and insert into queue
         while(temp != null){
-            if (temp.val < x ) smaller.offer(temp.val);
-            else greater.offer(temp.val);
+            if (temp.val < x){
+                beforeCurr.next = temp;
+                beforeCurr = beforeCurr.next;
+            }
+            else{
+                afterCurr.next = temp;
+                afterCurr = afterCurr.next;
+            }
             temp = temp.next;
         }
 
-        temp = head;
-
-        while(temp != null){
-            if (!smaller.isEmpty()) temp.val = smaller.poll();
-            else temp.val = greater.poll();
-            temp = temp.next;
-        }
-
-        return head;
+        // Join the two lists
+        beforeCurr.next = after.next;
+        afterCurr.next = null;
+        return before.next;
     }
 }
