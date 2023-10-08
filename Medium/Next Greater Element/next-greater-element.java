@@ -34,31 +34,30 @@ class Solution
     //Function to find the next greater element for each element of the array.
     public static long[] nextLargerElement(long[] arr, int n)
     { 
-        Stack<Long> s = new Stack<>();
-        ArrayList<Long> answer = new ArrayList<Long>();
+        // Stack to store the greater elements
+        Stack<Long> stack = new Stack<>();
+        ArrayList<Long> answer = new ArrayList<>();
+        int size = arr.length;
         
-        for(int i=arr.length-1; i>=0; i--){
-            if (s.isEmpty()) answer.add((long)-1);
-            else if (s.size() != 0 && s.peek() > arr[i]){
-                answer.add(s.peek());
+        // Traverse the array
+        for(int i=size-1; i>=0; i--){
+            
+            while (!stack.isEmpty() && stack.peek() <= arr[i]){
+                stack.pop();
             }
-            else if(!s.isEmpty() && s.peek() <= arr[i]){
-                while(!s.isEmpty() && s.peek() <= arr[i]){
-                    s.pop();
-                }
-                if (s.isEmpty()) answer.add((long)-1);
-                else answer.add(s.peek());
-            }
-            s.push(arr[i]);
+            
+            if (stack.isEmpty()) answer.add(-1L);
+            else answer.add(stack.peek());
+            
+            stack.push(arr[i]);
         }
         
-        long[] ans = new long[answer.size()];
-        int i=ans.length-1;
-        for(long item : answer){
-            ans[i] = item;
-            i--;
+        long[] result = new long[n];
+        int idx = size-1;
+        for(Long num : answer){
+            result[idx] = num;
+            idx--;
         }
-        
-        return ans;
+        return result;
     } 
 }
