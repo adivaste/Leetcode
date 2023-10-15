@@ -1,32 +1,23 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> answer = new ArrayList<>();
-        findAllParenthesis(n,n,answer, new StringBuilder());
+        findAllParenthesis(n,n,answer, "");
         return answer;
     }
 
-    public void findAllParenthesis(int open, int close, List<String> answer, StringBuilder paren){
+    public void findAllParenthesis(int open, int close, List<String> answer, String paren){
         if (open == 0 && close == 0){
-            answer.add(paren.toString());
+            answer.add(paren);
             return;
         }
-
         if (open == close){
-            paren.append("(");
-            findAllParenthesis(open-1,close ,answer, paren);
-            paren.deleteCharAt(paren.length()-1);
+            findAllParenthesis(open-1,close ,answer, paren + "(");
         }
         else if (open < close){
-           
            if(open > 0){
-               paren.append("(");
-               findAllParenthesis(open-1,close ,answer, paren);
-               paren.deleteCharAt(paren.length()-1);
+               findAllParenthesis(open-1,close ,answer, paren + "(");
            }
-
-           paren.append(")");
-           findAllParenthesis(open,close-1,answer, paren);
-           paren.deleteCharAt(paren.length()-1);
+           findAllParenthesis(open,close-1,answer, paren + ")");
         }
     }
 }
