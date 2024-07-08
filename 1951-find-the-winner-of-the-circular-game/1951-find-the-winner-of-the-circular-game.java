@@ -1,17 +1,15 @@
 class Solution {
     public int findTheWinner(int n, int k) {
-        ArrayList<Integer> friends = new ArrayList<>();
-
+        List<Integer> friends = new ArrayList<Integer>();
         for(int i=1; i<=n; i++){
             friends.add(i);
         }
 
-        int index = 0;
-
-        while(friends.size() != 1){
+        int removalIndex = 0;
+        while(friends.size() > 1){
             int size = friends.size();
-            index = (index + k - 1)%size;   
-            friends.remove(index);
+            removalIndex = (removalIndex + k - 1)%size;
+            friends.remove(removalIndex);
         }
 
         return friends.get(0);
