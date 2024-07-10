@@ -7,10 +7,7 @@ class Solution {
             if("../".equals(logs[i])){
                 if(folderDepth > 0) folderDepth--;
             }
-            else if ("./".equals(logs[i])){
-                continue;
-            }
-            else{
+            else if (!"./".equals(logs[i])){
                 folderDepth++;
             }
         }
